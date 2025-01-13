@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="55" height="40" viewBox="0 0 55 40">
+    <defs>
+        <linearGradient id="t2nbqz92pa" x1="50%" x2="50%" y1="22.144%" y2="116.697%">
+            <stop offset="0%" stop-color="#4680ffe6" stop-opacity="0"/>
+            <stop offset="100%" stop-color="#4680ffe6"/>
+        </linearGradient>
+        <linearGradient id="ymugx8tt1c" x1="50%" x2="50%" y1="0%" y2="100%">
+            <stop offset="0%" stop-color="#FFF"/>
+            <stop offset="100%" stop-color="#FFF" stop-opacity="0"/>
+        </linearGradient>
+        <linearGradient id="47vsubm3ne" x1="44.531%" x2="44.531%" y1="-7.599%" y2="39.519%">
+            <stop offset="0%" stop-color="#FFF" stop-opacity="0"/>
+            <stop offset="32.214%" stop-color="#FFF" stop-opacity="0"/>
+            <stop offset="100%" stop-color="#FFF"/>
+        </linearGradient>
+        <path id="wcahpzky4b" d="M2.564 0H48.35c.892 0 1.215.093 1.541.267.326.174.582.43.756.756.174.326.267.65.267 1.54v30.873c0 .892-.093 1.215-.267 1.54-.174.327-.43.583-.756.757-.326.174-.65.267-1.54.267H2.563c-.892 0-1.215-.093-1.54-.267-.327-.174-.583-.43-.757-.756-.174-.326-.267-.65-.267-1.54V2.563c0-.892.093-1.215.267-1.54.174-.327.43-.583.756-.757C1.35.093 1.673 0 2.563 0z"/>
+    </defs>
+    <g fill="none" fill-rule="evenodd">
+        <g>
+            <g>
+                <path fill="url(#t2nbqz92pa)" stroke="#4680ffe6" stroke-width="2" d="M48.35-1c1.175 0 1.587.158 2.013.385.503.27.897.664 1.166 1.167.228.425.385.837.385 2.012h0v30.872c0 1.175-.157 1.587-.385 2.012-.269.503-.663.898-1.166 1.167-.426.227-.838.385-2.013.385h0H2.564c-1.175 0-1.587-.158-2.012-.385-.503-.27-.898-.664-1.167-1.167-.227-.425-.385-.837-.385-2.012h0V2.564C-1 1.389-.842.977-.615.552-.345.049.05-.346.552-.615.977-.842 1.389-1 2.564-1H48.35z" transform="translate(-693 -286) translate(695 288)"/>
+                <g opacity=".2" transform="translate(-693 -286) translate(695 288)">
+                    <mask id="szy0c4chud" fill="#fff">
+                        <use xlink:href="#wcahpzky4b"/>
+                    </mask>
+                    <path fill="url(#ymugx8tt1c)" d="M-33.337 12.191L-7.42 -20.81 74.125 34 48.207 67.002z" mask="url(#szy0c4chud)"/>
+                    <path fill="url(#ymugx8tt1c)" d="M-33.337 26.995L-7.42 -6.007 74.125 48.804 48.207 81.805z" mask="url(#szy0c4chud)"/>
+                    <path fill="url(#47vsubm3ne)" d="M-47.884 32.042L-21.967 -0.96 59.578 53.851 33.661 86.852z" mask="url(#szy0c4chud)"/>
+                </g>
+                <g fill="#FFF" stroke="#4680ffe6" stroke-width="2">
+                    <path d="M49.557 0L25.583 17.401c-.444.35-1.165.35-1.61 0L0 0" transform="translate(-693 -286) translate(695 288) translate(.679)"/>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
