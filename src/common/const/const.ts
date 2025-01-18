@@ -43,6 +43,22 @@ export const breadrumbs_links: Record<string, BreadCrumbNode> = {
                 ],
             },
 
+
+            "/dashboard/orders/create": {
+                title: "Create order",
+                links: [
+                    {
+                        title: "Orders",
+                        url: "/dashboard/orders",
+                    },
+                    {
+                        title: "Create",
+                        url: "/dashboard/orders/create",
+                    },
+                ],
+            },
+
+
             "/dashboard/orders": {
                 title: "Orders",
                 links: [

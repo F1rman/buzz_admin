@@ -3,6 +3,7 @@ import Input from "common/components/inputs/input";
 import Select from "common/components/inputs/select";
 import { IFilter, IPrice } from "models/IOfferModel";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { offersApiService } from "services/api.service";
 
 interface Data {
@@ -28,7 +29,9 @@ interface State {
 }
 
 export default function CreateOffer() {
+    const navigate = useNavigate();
     const status = ["New", "Active", "Hidden", "Rejected"];
+
     const [data, setData] = useState<Data>({
         categories: [],
         brands: [],
@@ -223,6 +226,9 @@ export default function CreateOffer() {
                     <Button
                         variant="cancel"
                         className="!w-[145px] !p-0 flex items-center justify-center text-left !font-light"
+                        onClick={() => {
+                            navigate(-1);
+                        }}
                     >
                         Cancel
                     </Button>

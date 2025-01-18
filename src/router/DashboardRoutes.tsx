@@ -22,10 +22,13 @@ const DashboardRoutes = {
             element: <OrdersPage />
         },
         {
+            path: 'orders/create',
+            element: <CreateOffersPage />
+        },
+        {
             path: 'data',
             element: <div>Data</div>
         },
-
         {
             path: 'statistics',
             element: <div>Statistics</div>

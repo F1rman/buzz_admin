@@ -51,7 +51,7 @@ const Orders: React.FC = () => {
           <p className='text-center flex items-center text-[14px] text-white !leading-0'>Add New</p>
         </Button>
       </div>
-      <div className='flex flex-col overflow-x-auto w-full max-w-[1400px] border-[1px] border-[#dbe0e5a6] rounded-t-[12px]'>
+      <div className='flex flex-col overflow-x-auto w-full max-w-[1500px] border-[1px] border-[#dbe0e5a6] rounded-t-[12px]'>
         <OrderHeader
           state={state}
           setState={setState}
@@ -66,7 +66,7 @@ const Orders: React.FC = () => {
           />))}
         </div>
       </div>
-      {state.pages !== 0 && <div className='flex w-full max-w-[1400px] justify-center mt-6'>
+      {state.pages !== 0 && <div className='flex w-full max-w-[1500px] justify-center mt-6'>
         <Stack spacing={40}>
           <Pagination count={state.pages} variant="outlined" color="primary"
             onChange={(event, value) => {
