@@ -29,3 +29,21 @@ export interface IOffersResponse {
     };
     header: any;
 }
+
+export interface IFilter {
+        value: number;
+        text: string;
+}
+
+
+export interface IPriceTemplate {
+    hours_from: number;
+}
+
+export interface IPrice {
+    id: number;
+    min_hour_price: number;
+    currency_id: number;
+    price_templates: IPriceTemplate[];
+    price_templates_default: IPriceTemplate[];
+}

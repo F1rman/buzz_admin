@@ -9,7 +9,6 @@ import { navigationrActions } from "redux/slices/navigationSlice";
 
 interface state {
     hide: boolean;
-    active: string;
 }
 interface IProps {
     state: state;
@@ -17,12 +16,9 @@ interface IProps {
 }
 
 const Header: React.FC<IProps> = ({ state, setState }) => {
-    //test
     const dispatch = useAppDispatch();
     const { darkMode } = useAppSelector((state) => state.navigation);
 
-    console.log(darkMode,'!!!!!!');
-    //test
     return (
         <header className={`flex justify-between header ${!state.hide ? "show" : "hide"}`}>
             <div className="flex items-center">

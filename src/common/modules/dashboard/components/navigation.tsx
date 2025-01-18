@@ -4,21 +4,22 @@ import logo from "common/assets/images/logo.png";
 import UserNav from "./userNav";
 import menuItems from "./menu-items/menu-items";
 import NavItem from "./navItem";
+import { useLocation, useNavigate } from "react-router-dom";
 
-interface NavigationProps {
+interface IProps {
     state: {
         hide: boolean;
-        active: string;
     };
     setState: React.Dispatch<React.SetStateAction<{
         hide: boolean;
-        active: string;
     }>>;
 }
 
-export default function Navigation({ state, setState }: NavigationProps) {
-    const [showSetting, setShowSetting] = useState(false);
+export default function Navigation({ state, setState }: IProps) {
+    const { pathname } = useLocation();
+    const navigate = useNavigate();
 
+    const [showSetting, setShowSetting] = useState(false);
     return (
         <div
             className={`${!state.hide ? "w-[280px]" : "w-[90px] show"
@@ -47,9 +48,9 @@ export default function Navigation({ state, setState }: NavigationProps) {
                                 key={item.id}
                                 Icon={item.icon}
                                 title={item.title}
-                                active={state.active === item.id}
+                                active={pathname === item.url}
                                 navOpen={state.hide}
-                                onClick={() => setState((prev) => ({ ...prev, active: item.id }))}
+                                onClick={() => navigate(item.url)}
                             />)
                     })}
                 </div>

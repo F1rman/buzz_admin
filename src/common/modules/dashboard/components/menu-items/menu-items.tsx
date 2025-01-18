@@ -1,10 +1,12 @@
-import { Story, Fatrows, PresentionChart } from 'iconsax-react';
+import { Story, Fatrows, PresentionChart, HomeTrendUp, Bill } from 'iconsax-react';
 
 const icons = {
     widgets: Story,
     statistics: Story,
     data: Fatrows,
-    chart: PresentionChart
+    chart: PresentionChart,
+    dashboard: HomeTrendUp,
+    offers: Bill
 };
 
 interface MenuItem {
@@ -27,11 +29,27 @@ const menuItems: MenuItems = {
     title: 'Dashboard',
     children: [
         {
-            id: 'chart',
-            title: 'Chart',
+            id: 'dashboard',
+            title: 'Dashboard',
             type: 'item',
-            url: '/dashboard/chart',
-            icon: icons.chart,
+            url: '/dashboard',
+            icon: icons.dashboard,
+            superAdmin: false
+        },
+        {
+            id: 'offers',
+            title: 'Offers',
+            type: 'item',
+            url: '/dashboard/offers',
+            icon: icons.offers,
+            superAdmin: false
+        },
+        {
+            id: 'orders',
+            title: 'Orders',
+            type: 'item',
+            url: '/dashboard/orders',
+            icon: icons.statistics,
             superAdmin: false
         },
         {
@@ -39,7 +57,7 @@ const menuItems: MenuItems = {
             title: "Statistics",
             type: 'item',
             url: '/dashboard/statistics',
-            icon: icons.statistics,
+            icon: icons.chart,
             superAdmin: false
         },
         {

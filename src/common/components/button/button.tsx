@@ -6,7 +6,7 @@ interface ButtonProps {
     onClick?: MouseEventHandler<HTMLButtonElement>;
     type?: "button" | "submit" | "reset";
     className?: string;
-    variant?: "auth" | "default" | "signup";
+    variant?: "auth" | "default" | "signup" | "cancel";
     disabled?: boolean;
     disabledRipple?: boolean;
 }
@@ -35,6 +35,8 @@ export default function Button({
                 return "#f3ecec24";
             case "signup":
                 return "#b9d7d430";
+            case "cancel":
+                return "#f3ecec24";
             default:
                 return "#b9d7d430";
         }
@@ -49,6 +51,7 @@ export default function Button({
         auth: "bg-[#4680FF] auth_btn rounded-[8px] flex items-center justify-center w-full pl-6 pr-4 h-[42px]",
         signup: "flex justify-center items-center bg-[#04AA00] border-[1px] border-solid border-[#0000001A] rounded-[24px] h-[42px] w-[114px]",
         default: "flex justify-center items-center bg-transparent rounded-[8px] w-max h-max hover:bg-[#DBE0E5] transition-all duration-300 ease-in-out p-2",
+        cancel: "flex justify-center items-center rounded-[8px] w-full h-[42px] border-[1px] border-solid transition-all duration-300 ease-in-out p-2"
     };
 
     return (

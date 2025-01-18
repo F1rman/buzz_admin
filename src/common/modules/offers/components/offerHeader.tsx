@@ -5,8 +5,9 @@ import HeaderItem from './headerItem';
 interface IProps {
     state: {
         selectAll: boolean;
+        filters: number[];
     };
-    setState: React.Dispatch<React.SetStateAction<{ selectAll: boolean }>>;
+    setState: React.Dispatch<React.SetStateAction<{ selectAll: boolean; filters: number[], pages: number, page: number }>>;
 }
 const OfferHeader: React.FC<IProps> = ({ state, setState }) => {
     return (

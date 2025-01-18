@@ -208,6 +208,22 @@ p {
   }
 }
 
+textarea {
+  border-radius: 6px;
+  border: solid 1px #e0e0e0;
+  transition: all 0.3s ease-in-out;
+
+  &:focus {
+    border: 1px solid #7ea6ff;
+    box-shadow: 0 0 0 2px rgba(70, 128, 255, 0.1);
+    outline: none;
+
+    &.error {
+      box-shadow: 0 0 0 2px rgba(220, 38, 38, 0.2);
+    }
+  }
+}
+
 .input_wrapper {
   position: relative;
   background: none;
@@ -229,6 +245,73 @@ p {
     transition: color 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms, transform 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms, max-width 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms;
     color: #5B6B79;
     margin-bottom: 8px;
+  }
+
+  select {
+    &.outlined {
+      width: 100%;
+      height: 55px;
+      font-size: 14px;
+      font-weight: 500;
+      color: $secondary_text_color;
+      padding: 0px 28px 0px 22px;
+      border-radius: 6px;
+      border: solid 1px #e0e0e0;
+      background-color: #ffffff;
+      appearance: none;
+      transition: all 0.3s ease-in-out;
+
+      &:focus {
+        border: 1px solid #7ea6ff;
+        box-shadow: 0 0 0 2px rgba(70, 128, 255, 0.1);
+        outline: none;
+      }
+
+      &.error {
+        border: solid 1px $error_color !important;
+      }
+    }
+
+    &.gradient_select {
+      background: linear-gradient(to top, #e0e0e0, #ffffff);
+      text-align: left;
+      height: 55px;
+      width: 100%;
+      border-radius: 6px;
+      padding-left: 20px;
+      border: solid 1px #e0e0e0;
+      width: 100%;
+      appearance: none;
+      color: $secondary_text_color;
+      padding-right: 40px;
+    }
+  }
+
+  .arr_wrapper {
+    position: relative;
+    width: 100%;
+
+    .arr {
+      pointer-events: none;
+      background-image: url(../common/assets/images/sign-up-time-zone-down-drop.svg);
+      background-position: center;
+      position: absolute;
+      width: 10px;
+      right: 20px;
+      background-repeat: no-repeat;
+      height: 55px;
+      display: flex;
+      bottom: 0;
+      align-items: center;
+      justify-content: center;
+      transition: $transition;
+
+      &.active {
+        .arr {
+          transform: rotate(180deg);
+        }
+      }
+    }
   }
 
   .outline_input {
@@ -429,7 +512,7 @@ p {
       width 300ms cubic-bezier(0.4, 0, 0.6, 1);
   }
 
-  .page{
+  .page {
     &.show {
       width: calc(100% - 295px);
     }
@@ -481,4 +564,16 @@ p {
     //   padding-right: 36px;
     // }
   }
+}
+
+.breacrums {
+  a {
+    color: #5B6B79;
+  }
+
+  img {
+    color: #5B6B79 !important;
+  }
+
+  padding-bottom: 24px
 }
