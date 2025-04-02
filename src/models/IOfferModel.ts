@@ -21,6 +21,26 @@ export interface IOfferItem {
     updated_by: string;
 }
 
+interface Price {
+    price: number;
+    hours_from: number;
+    currency_id: number;
+}
+
+export interface IOfferDataForm {
+    address: string;
+    geo_lat: string;
+    geo_long: string;
+    content: string;
+    category_id: number;
+    brand_id: number;
+    region_id: string;
+    status: string;
+    prices: Price[];
+    projects: number[];
+    tags: number[];
+}
+
 export interface IOffersResponse {
     items: {
         data: IOfferItem[];

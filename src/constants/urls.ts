@@ -6,15 +6,21 @@ const urls = {
     },
 
     offers: {
-        allOffers: (page: number, size: number): string => `offers?page%5Bnumber%5D=${page}&page%5Bsize%5D=${size}`
+        allOffers: (page: number, size: number): string => `offers?page%5Bnumber%5D=${page}&page%5Bsize%5D=${size}`,
+        create: 'offers'
     },
 
     orders: {
-        allOrders: (page: number, size: number): string => `orders?page%5Bnumber%5D=${page}&page%5Bsize%5D=${size}`
+        allOrders: (page: number, size: number): string => `orders?page%5Bnumber%5D=${page}&page%5Bsize%5D=${size}`,
+        create: 'orders'
+    },
+
+    regions: {
+        list: 'regions/list'
     },
 
     categories: {
-        list : 'categories/list'
+        list: 'categories/list'
     },
 
     brands: {

@@ -1,7 +1,7 @@
 import { AxiosResponse } from "axios";
 import { urls } from "../constants/urls";
 import { IAuthModel } from "models/IAuthModel";
-import { IFilter, IOfferItem, IOffersResponse, IPrice } from "models/IOfferModel";
+import { IFilter, IOfferDataForm, IOfferItem, IOffersResponse, IPrice } from "models/IOfferModel";
 import { axiosService } from "./axios.service";
 import { IOrder, IOrderResponse } from "models/IOrder";
 
@@ -12,9 +12,9 @@ const authApiService = {
     }
 }
 
-const offersApiService = {
-    getAllOffers: async (page: number, size: number): Promise<IOffersResponse> => {
-        const { data } = await axiosService.get<IOffersResponse>(urls.offers.allOffers(page, size))
+const mainApiService = {
+    getAllRegions: async (): Promise<IFilter[]> => {
+        const { data } = await axiosService.get<IFilter[]>(urls.regions.list);
         return data;
     },
 
@@ -41,6 +41,20 @@ const offersApiService = {
     getPricesByCategoryId: async (categoryId: number): Promise<IPrice> => {
         const { data } = await axiosService.get<IPrice>(urls.prices.byCategoryId(categoryId));
         return data;
+    },
+}
+
+const offersApiService = {
+    getAllOffers: async (page: number, size: number): Promise<IOffersResponse> => {
+        const { data } = await axiosService.get<IOffersResponse>(urls.offers.allOffers(page, size))
+        return data;
+    },
+
+    createOffer: async (offer: FormData): Promise<IOfferItem> => {
+        const { data } = await axiosService.post<IOfferItem>(urls.offers.create, offer, {
+            headers: { "Content-Type": "multipart/form-data" }
+        });
+        return data;
     }
 }
 
@@ -48,12 +62,21 @@ const ordersApiService = {
     getAllOrders: async (page: number, size: number): Promise<IOrderResponse> => {
         const { data } = await axiosService.get<IOrderResponse>(urls.orders.allOrders(page, size));
         return data;
+    },
+
+    createOrder: async (order: FormData): Promise<IOrder> => {
+        const { data } = await axiosService.post<IOrder>(urls.orders.create, order, {
+            headers: { "Content-Type": "multipart/form-data" }
+        });
+        return data;
     }
+
 }
 
 
 export {
     offersApiService,
     authApiService,
-    ordersApiService
+    ordersApiService,
+    mainApiService
 }

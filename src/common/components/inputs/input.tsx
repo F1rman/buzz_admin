@@ -26,6 +26,7 @@ interface InputProps {
     error?: string | boolean | null;
     disabledRipple?: boolean;
     search?: boolean;
+    id?: string;
 }
 
 const Input: React.FC<InputProps> = ({
@@ -50,6 +51,7 @@ const Input: React.FC<InputProps> = ({
     error = false,
     disabledRipple = false,
     search = false,
+    id = "defaultInput",
 }) => {
     const [inputValue, setInputValue] = useState(value || "");
     const [show, setShow] = useState(true);
@@ -71,6 +73,7 @@ const Input: React.FC<InputProps> = ({
             )}
             <div className="flex w-full relative">
                 <input
+                    id={id}
                     value={value !== undefined ? value : inputValue}
                     maxLength={maxLength}
                     onKeyDown={onKeyDown}

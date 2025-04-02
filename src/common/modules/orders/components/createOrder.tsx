@@ -1,10 +1,11 @@
 import Button from "common/components/button/button";
 import Input from "common/components/inputs/input";
+import InputSearchPlace from "common/components/inputs/input_search_place";
 import Select from "common/components/inputs/select";
 import { IFilter, IPrice } from "models/IOfferModel";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { mainApiService, offersApiService } from "services/api.service";
+import { mainApiService, ordersApiService } from "services/api.service";
 
 interface Data {
     categories: IFilter[];
@@ -12,37 +13,33 @@ interface Data {
     projects: IFilter[]
     currencies: IFilter[];
     prices: IPrice;
-    content: string;
+    regions: IFilter[];
 }
 
 interface State {
     category: string;
     brand: string;
     status: string;
-    project: string;
     address: string;
     currency: string;
-    "prices[0][price]": number;
-    "prices[1][price]": number;
-    "prices[1][currency_id]": number;
-    "prices[0][hours_from]": number;
-    "prices[1][hours_from]": number;
-    geo_lat: number;
-    geo_long: number;
-    content: string;
+    price: string;
+    geo_lat: string,
+    geo_long: string,
+    region_id: string;
+    project_id: string;
+    description: string;
 }
 
-export default function CreateOffer() {
+export default function CreateOrder() {
     const navigate = useNavigate();
     const status = ["New", "Active", "Hidden", "Rejected"];
-    const [isLoading, setIsLoading] = useState(false);
 
     const [data, setData] = useState<Data>({
         categories: [],
         brands: [],
         projects: [],
         currencies: [],
-        content: "",
+        regions: [],
         prices: {
             "id": 1,
             "min_hour_price": 122,
@@ -62,18 +59,15 @@ export default function CreateOffer() {
     const [state, setState] = useState<State>({
         category: "",
         brand: "",
-        project: "",
+        project_id: "1",
         address: "",
-        "prices[0][hours_from]": 1,
-        "prices[1][hours_from]": 8,
-        "prices[0][price]": 0,
-        "prices[1][price]": 0,
         currency: "",
-        "prices[1][currency_id]": 0,
+        price: "",
         status: "",
-        geo_lat: 49.6921198,
-        geo_long: 24.3570757,
-        content: ""
+        region_id: "",
+        geo_lat: "49.6921198",
+        geo_long: "24.3570757",
+        description: ""
     });
 
     useEffect(() => {
@@ -82,6 +76,7 @@ export default function CreateOffer() {
             const brands = await mainApiService.getAllBrands();
             const projects = await mainApiService.getAllProjects();
             const currencies = await mainApiService.getAllCurrencies();
+            const regions = await mainApiService.getAllRegions();
 
 
             return {
@@ -90,7 +85,7 @@ export default function CreateOffer() {
                 projects,
                 currencies,
                 prices: data.prices,
-                content: data.content
+                regions
             }
         };
 
@@ -106,58 +101,29 @@ export default function CreateOffer() {
             });
         }
     }, [state.category]);
-    console.log(state)
 
 
-    const createOffer = async () => {
+    const createOrder = async () => {
         const formData = new FormData();
 
-        formData.append("address", state.address);
-        formData.append("geo_lat", state.geo_lat.toString());
-        formData.append("geo_long", state.geo_long.toString());
-        formData.append("content", state.content);
         formData.append("category_id", state.category);
-        formData.append("brand_id", state.brand);
-        formData.append("region_id", "10");
-        formData.append("status", "new");
-        formData.append("prices[0][price]", state["prices[0][price]"].toString());
-        formData.append("prices[0][hours_from]", "1");
-        formData.append("prices[0][currency_id]", "2");
-        formData.append("prices[1][price]", state["prices[1][price]"].toString());
-        formData.append("prices[1][hours_from]", "8");
-        formData.append("prices[1][currency_id]", "2");
-        formData.append("projects[0]", "1");
-        formData.append("tags[0]", "1");
+        formData.append("date_from", "2025-04-09");
+        formData.append("date_to", "2025-04-03");
+        formData.append("geo_lat", state.geo_lat);
+        formData.append("geo_long", state.geo_long);
+        formData.append("currency_id", state.currency);
+        formData.append("price", state.price);
+        formData.append("region_id", "3");
+        formData.append("project_id", state.project_id);
+        formData.append("status_id", state.status);
+        formData.append("client_id", "1");
+        formData.append("address", state.address);
+        formData.append("description", state.description);
 
-        // const offerItem: IOfferItem = {
-        //     id: 0, // Replace with actual id if available
-        //     name: state.address, // Replace with the appropriate field
-        //     alias: "", // Replace with the appropriate field
-        //     status: state.status,
-        //     category_id: Number(state.category),
-        //     brand_id: Number(state.brand),
-        //     region_id: 10,
-        //     geo_lat: state.geo_lat,
-        //     geo_long: state.geo_long,
-        //     content: state.content,
-        //     prices: [
-        //         {
-        //             price: state["prices[0][price]"],
-        //             hours_from: state["prices[0][hours_from]"],
-        //             currency_id: 2,
-        //         },
-        //         {
-        //             price: state["prices[1][price]"],
-        //             hours_from: state["prices[1][hours_from]"],
-        //             currency_id: 2,
-        //         },
-        //     ],
-        //     projects: [1], // Replace with actual project IDs
-        //     tags: [1], // Replace with actual tag IDs
-        // };
-
-        await offersApiService.createOffer(formData)
+        const res = await ordersApiService.createOrder(formData);
+        console.log(res)
     }
+
     console.log(state)
     return (
         <div className="flex flex-col w-full">
@@ -179,7 +145,7 @@ export default function CreateOffer() {
                         ))}
                     </Select>
                     <Select
-                        name="category"
+                        name="brand"
                         defaultValue={state.brand}
                         onChange={(e) => {
                             setState((prev) => ({ ...prev, brand: e.target.value }));
@@ -213,7 +179,7 @@ export default function CreateOffer() {
                     </Select>
                     <Select
                         name="project"
-                        defaultValue={state.project}
+                        defaultValue={state.project_id}
                         onChange={(e) => {
                             setState((prev) => ({ ...prev, project: e.target.value }));
                         }}
@@ -229,34 +195,36 @@ export default function CreateOffer() {
                 </div>
                 <div className="flex w-full gap-3 items-center">
                     <Input
-                        name="price1"
-                        value={String(state["prices[0][price]"])}
+                        name="price"
+                        value={state.price}
                         onChange={(e) => {
                             if (isNaN(Number(e.target.value))) return;
                             setState((prev) => ({
                                 ...prev,
-                                "prices[0][price]": Number(e.target.value)
+                                price: e.target.value
                             }));
                         }}
-                        label="Price per hour for 1h"
+                        label="Price"
                         wrapperClassName="w-full"
                     />
-                    <Input
-                        name="price2"
-                        value={String(state["prices[1][price]"])}
+                    <Select
+                        defaultValue={state.region_id}
+                        name="region"
                         onChange={(e) => {
-                            if (isNaN(Number(e.target.value))) return;
-                            setState((prev) => ({
-                                ...prev,
-                                "prices[1][price]": Number(e.target.value)
-                            }));
+                            setState((prev) => ({ ...prev, region_id: e.target.value }));
                         }}
-                        label="Price per hour for 8h"
-                        wrapperClassName="w-full"
-                    />
+                        label="Region"
+                        className="!items-start w-full"
+                    >
+                        {data.regions.map((c, index) => (
+                            <option key={index} value={c.value}>
+                                {c.text}
+                            </option>
+                        ))}
+                    </Select>
                 </div>
                 <div className="flex w-full gap-3 items-center">
-                    <Input
+                    {/* <Input
                         name="address"
                         value={state.address}
                         onChange={(e) => {
@@ -264,6 +232,23 @@ export default function CreateOffer() {
                         }}
                         label="Address"
                         wrapperClassName="w-full"
+                    /> */}
+                    <InputSearchPlace
+                        onChange={(e) => {
+                            console.log(e.target.value)
+                            if (e.target.value.geo_lat) {
+                                setState((prev) => ({ ...prev, geo_lat: e.target.value.geo_lat, geo_long: e.target.value.geo_long, address: e.target.value.description }));
+                            } else {
+                                setState((prev) => ({ ...prev, address: e.target.value }));
+                            }
+                        }}
+                        onClick={(info) => {
+                            console.log(info)
+                        }}
+                        value={state.address}
+                        name="address"
+                        label="Address"
+
                     />
                     <Select
                         defaultValue={status[0]}
@@ -281,11 +266,12 @@ export default function CreateOffer() {
                         ))}
                     </Select>
                 </div>
+
                 <div className="flex flex-col w-full">
                     <span className="text-[#5B6B79] text-[14px] mb-[8px]">Description</span>
-                    <textarea name="content" value={state.content} className="w-full !h-[200px] p-6"
+                    <textarea name="description" className="w-full !h-[200px] p-6" value={state.description}
                         onChange={(e) => {
-                            setState((prev) => ({ ...prev, content: e.target.value }));
+                            setState((prev) => ({ ...prev, description: e.target.value }));
                         }}
                     ></textarea>
                 </div>
@@ -302,7 +288,7 @@ export default function CreateOffer() {
                     <Button
                         variant="auth"
                         className="!w-[145px] !p-0 flex items-center justify-center text-left text-white !font-light"
-                        onClick={createOffer}
+                        onClick={createOrder}
                     >
                         Save
                     </Button>

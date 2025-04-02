@@ -2,6 +2,7 @@ import DashboardLayout from "common/layout/dashboard";
 import ErrorLayout from "layouts/error/ErrorLayout";
 import { CreateOffersPage } from "pages/offers/create/CreateOfferPage";
 import { OffersPage } from "pages/offers/OffersPage";
+import { CreateOrdersPage } from "pages/orders/create/CreateOrdersPage";
 import { OrdersPage } from "pages/orders/OrderPage";
 
 const DashboardRoutes = {
@@ -23,7 +24,7 @@ const DashboardRoutes = {
         },
         {
             path: 'orders/create',
-            element: <CreateOffersPage />
+            element: <CreateOrdersPage />
         },
         {
             path: 'data',
