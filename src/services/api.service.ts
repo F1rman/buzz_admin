@@ -1,4 +1,4 @@
-import { AxiosResponse } from "axios";
+import axios, { AxiosResponse } from "axios";
 import { urls } from "../constants/urls";
 import { IAuthModel } from "models/IAuthModel";
 import { IFilter, IOfferDataForm, IOfferItem, IOffersResponse, IPrice } from "models/IOfferModel";
@@ -42,6 +42,27 @@ const mainApiService = {
         const { data } = await axiosService.get<IPrice>(urls.prices.byCategoryId(categoryId));
         return data;
     },
+
+    uploadFile: async (file: File, access_type = 'public') => {
+        const formData = new FormData();
+        
+        formData.append("file", file);
+        formData.append("access_type", access_type);
+
+        try {
+            const res = await axios.post('https://files.buuz24.app/api/files', formData, {
+                headers: {
+                    Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiNWM3MTQxYTQ0ZjIxOGE3NzYzNzZiOWQ0YjNmMjI3NDdhYzkyZmIxMmRhNDFlZGYyZTMzYjNlZDMwOWU4YjZhMzQ2N2M1MDFiZWI0YWM4YTciLCJpYXQiOjE2OTE4MTA1NzAuOTUwNjg3LCJuYmYiOjE2OTE4MTA1NzAuOTUwNjkzLCJleHAiOjE3MjM0MzI5NzAuOTQyNjgxLCJzdWIiOiI0NCIsInNjb3BlcyI6W119.OVc5FbY2ZfxS_MAYncoawRXYgjQM9wEPaTSkWlX5IFKacPg5xJ068JlpyhfDhBc3QCVlI_WD08gAKTec7KrR-goS4nnqybrwtVjvaznWGdIcG-numZw5J56CqI_nvtvCfkApmiJm2JPTFi6JwshVgKQSaVf8pe4LuY6Pe4MMnekd_TQKmkYg_h6fzTbcqucG5wQrDql8v24POmTMRPIR-4bbmP5q30g1nmCOcWIYjf_xiWUY7WonyRmPNHJ4G1Z8VoS_WMk-l5DoCY6zCo0B2TMBtzzoV0vhzxgx5-a_dWn4x-8SKOLOXwJY2Ngv-xl8djYgZnu11MG3OYvuch4ICUIbKXKYEhVoyqNhYqzDMXeoKGpMFY01TGe8hFgwO-kuj-Gs9AtBaRgwq7204HUORFnuxutLce0s88kmZHrRQJQU9F8MKvLfYNaYkKB81YOD88s9ncRN-jBA8bYNTvW2giAPnA30aGA7w_nNcUL2-vNYpWZ1JomPc2UsVGtPCe5ipyLYXvE93EzqCCAEDnQuS4gwz4G4WMd_fILI_BorVotHx_rYQV7_dK4zMMFhWUakZs7ZR5BH8zLbh_nOYXz9_R17Zfb5wVZuNt-Ql3Qcw-nMHcU2MKuQwlr7CyVqehlht4zPX5WF8DxqcNxecQm7W0clspc31i84VuoP-sXoH1o`,
+                    'Content-Type': 'multipart/form-data'
+                }
+            });
+
+            return res.data;
+        } catch (error) {
+            console.error("Помилка при завантаженні файлу:", error);
+            throw error;
+        }
+    }
 }
 
 const offersApiService = {

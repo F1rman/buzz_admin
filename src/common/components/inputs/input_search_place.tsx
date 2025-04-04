@@ -139,7 +139,7 @@ console.log(load)
       />
 
       {hideResults && (
-        <ul className={`results ${label && "!top-[79px]"} bg-white py-2 gap-1 flex flex-col border-[1px] border-solid rounded-lg rounded-t-none absolute`}>
+        <ul className={`results ${label && "!top-[79px]"} bg-white py-2 gap-1 flex flex-col border-[1px] border-solid rounded-lg rounded-t-none absolute z-50`}>
           {!isPlacePredictionsLoading ? (
             placePredictions.map((item, i) => (
               <li

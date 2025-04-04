@@ -6,6 +6,8 @@ import { IFilter, IPrice } from "models/IOfferModel";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { mainApiService, ordersApiService } from "services/api.service";
+import Calendar from "react-calendar";
+import File from "common/components/button/file";
 
 interface Data {
     categories: IFilter[];
@@ -28,6 +30,8 @@ interface State {
     region_id: string;
     project_id: string;
     description: string;
+    date: any;
+    files: File[];
 }
 
 export default function CreateOrder() {
@@ -67,7 +71,9 @@ export default function CreateOrder() {
         region_id: "",
         geo_lat: "49.6921198",
         geo_long: "24.3570757",
-        description: ""
+        description: "",
+        date: new Date(),
+        files: []
     });
 
     useEffect(() => {
@@ -106,9 +112,12 @@ export default function CreateOrder() {
     const createOrder = async () => {
         const formData = new FormData();
 
+        const dateFrom = Array.isArray(state.date) ? state.date[0] : state.date;
+        const dateTo = Array.isArray(state.date) ? (state.date.length == 2 ? state.date[1] : state.date[0]) : state.date;
+
         formData.append("category_id", state.category);
-        formData.append("date_from", "2025-04-09");
-        formData.append("date_to", "2025-04-03");
+        formData.append("date_from", dateFrom.toISOString().split('T')[0]);
+        formData.append("date_to", dateTo.toISOString().split('T')[0]);
         formData.append("geo_lat", state.geo_lat);
         formData.append("geo_long", state.geo_long);
         formData.append("currency_id", state.currency);
@@ -120,6 +129,12 @@ export default function CreateOrder() {
         formData.append("address", state.address);
         formData.append("description", state.description);
 
+        if(state.files.length !== 0) {
+            state.files.forEach((file, index) => {
+                formData.append(`files${index}[file]`, file);
+            });
+        }
+        
         const res = await ordersApiService.createOrder(formData);
         console.log(res)
     }
@@ -267,13 +282,79 @@ export default function CreateOrder() {
                     </Select>
                 </div>
 
-                <div className="flex flex-col w-full">
-                    <span className="text-[#5B6B79] text-[14px] mb-[8px]">Description</span>
-                    <textarea name="description" className="w-full !h-[200px] p-6" value={state.description}
-                        onChange={(e) => {
-                            setState((prev) => ({ ...prev, description: e.target.value }));
+
+                <div className="flex items-center gap-3 h-[320px]">
+                    <div className="relative">
+                        <Calendar
+                            locale="en-EN"
+                            onClickDay={(d) => {
+                                if (state.date.length === 2) {
+                                    setState((prev) => ({ ...prev, date: [d] }));
+                                } else if (
+                                    state.date.length === 1 &&
+                                    (new Date(state.date[0]).toDateString() ||
+                                        new Date(state.date[1]).toDateString()) !== d.toDateString()
+                                ) {
+                                    setState((prev) => ({ ...prev, date: [d] }));
+                                }
+                            }}
+                            onChange={(e) => {
+                                setState((prev) => ({ ...prev, date: Array.isArray(e) ? e : [e] }));
+                            }}
+                            selectRange={true}
+                            value={state.date as [Date, Date]}
+                            showNeighboringMonth={false}
+                            className={`w-1/2 min-w-[380px] user-select-none !shadow-none`}
+                            onViewChange={(e) => {
+                                console.log(e);
+                            }}
+                            tileContent={({ date }) => {
+                                if (
+                                    new Date(state.date[0]).toDateString() ===
+                                    new Date(date).toDateString()
+                                ) {
+                                    return (
+                                        <div className="bg-[#1d4354] absolute w-[40px] h-[40px] text-white flex justify-center items-center rounded-full">
+                                            {date.getDate()}
+                                        </div>
+                                    );
+                                } else if (
+                                    new Date(state.date[1]).toDateString() ===
+                                    new Date(date).toDateString()
+                                ) {
+                                    return (
+                                        <div className="bg-[#1d4354] absolute w-[40px] h-[40px] text-white flex justify-center items-center rounded-full border-[2px] border-[#1d4354]">
+                                            {date.getDate()}
+                                        </div>
+                                    );
+                                } else if (
+                                    new Date(state.date).toDateString() ===
+                                    new Date(date).toDateString()
+                                ) {
+                                    return (
+                                        <div className="bg-[#1d4354] absolute w-[40px] h-[40px] text-white flex justify-center items-center rounded-full">
+                                            {date.getDate()}
+                                        </div>
+                                    );
+                                }
+                            }}
+                        />
+                    </div>
+                    <div className="flex flex-col w-full h-full">
+                        <span className="text-[#5B6B79] text-[14px] mb-[8px]">Description</span>
+                        <textarea name="description" className="flex w-full h-full p-6" value={state.description}
+                            onChange={(e) => {
+                                setState((prev) => ({ ...prev, description: e.target.value }));
+                            }}
+                        ></textarea>
+                    </div>
+                </div>
+                <div className="flex flex-col w-full justify-center items-center">
+                    <File
+                        onFileUpload={(file) => {
+                            setState((prev) => ({ ...prev, files: [...prev.files, file] }));
                         }}
-                    ></textarea>
+                    />
                 </div>
                 <div className="flex w-full gap-3 items-center justify-end mt-3">
                     <Button
