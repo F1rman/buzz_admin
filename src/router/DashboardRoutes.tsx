@@ -1,5 +1,7 @@
 import DashboardLayout from "common/layout/dashboard";
 import ErrorLayout from "layouts/error/ErrorLayout";
+import { BroadcastPage } from "pages/broadcast/BroadcastPage";
+import { MessagePage } from "pages/messages/MessagePage";
 import { CreateOffersPage } from "pages/offers/create/CreateOfferPage";
 import { OffersPage } from "pages/offers/OffersPage";
 import { CreateOrdersPage } from "pages/orders/create/CreateOrdersPage";
@@ -27,12 +29,12 @@ const DashboardRoutes = {
             element: <CreateOrdersPage />
         },
         {
-            path: 'data',
-            element: <div>Data</div>
+            path: 'messages',
+            element: <MessagePage />
         },
         {
-            path: 'statistics',
-            element: <div>Statistics</div>
+            path: 'broadcast',
+            element: <BroadcastPage />
         }
     ]
 }

@@ -32,12 +32,14 @@ interface State {
     description: string;
     date: any;
     files: File[];
+    removeAllFiles: boolean;
 }
 
 export default function CreateOrder() {
     const navigate = useNavigate();
     const status = ["New", "Active", "Hidden", "Rejected"];
 
+    const [loading, setLoading] = useState(false);
     const [data, setData] = useState<Data>({
         categories: [],
         brands: [],
@@ -73,7 +75,8 @@ export default function CreateOrder() {
         geo_long: "24.3570757",
         description: "",
         date: new Date(),
-        files: []
+        files: [],
+        removeAllFiles: true
     });
 
     useEffect(() => {
@@ -110,6 +113,7 @@ export default function CreateOrder() {
 
 
     const createOrder = async () => {
+        setLoading(true);
         const formData = new FormData();
 
         const dateFrom = Array.isArray(state.date) ? state.date[0] : state.date;
@@ -129,17 +133,33 @@ export default function CreateOrder() {
         formData.append("address", state.address);
         formData.append("description", state.description);
 
-        if(state.files.length !== 0) {
+        if (state.files.length !== 0) {
             state.files.forEach((file, index) => {
                 formData.append(`files${index}[file]`, file);
             });
         }
-        
-        const res = await ordersApiService.createOrder(formData);
-        console.log(res)
+
+        await ordersApiService.createOrder(formData);
+        setLoading(false);
+        setState((prev) => ({
+            ...prev,
+            category: "",
+            brand: "",
+            project_id: "1",
+            address: "",
+            currency: "",
+            price: "",
+            status: "",
+            region_id: "",
+            geo_lat: "49.6921198",
+            geo_long: "24.3570757",
+            removeAllFiles: true,
+            description: "",
+            date: new Date(),
+            files: []
+        }));
     }
 
-    console.log(state)
     return (
         <div className="flex flex-col w-full">
             <div className="flex flex-col gap-3 w-max min-w-[1200px] px-4 py-3">
@@ -352,8 +372,12 @@ export default function CreateOrder() {
                 <div className="flex flex-col w-full justify-center items-center">
                     <File
                         onFileUpload={(file) => {
-                            setState((prev) => ({ ...prev, files: [...prev.files, file] }));
+                            setState((prev) => ({ ...prev, files: [...prev.files, file], removeAllFiles: false }));
                         }}
+                        onRemoveFile={(index) => {
+                            setState((prev) => ({ ...prev, files: prev.files.filter((_, i) => i !== index) }));
+                        }}
+                        removeAllFiles={state.removeAllFiles}
                     />
                 </div>
                 <div className="flex w-full gap-3 items-center justify-end mt-3">
@@ -370,8 +394,9 @@ export default function CreateOrder() {
                         variant="auth"
                         className="!w-[145px] !p-0 flex items-center justify-center text-left text-white !font-light"
                         onClick={createOrder}
+                        disabled={loading}
                     >
-                        Save
+                        {loading && <div className={`loader w-[20px] h-[20px] mr-3`}></div>} <span>Save</span>
                     </Button>
                 </div>
             </div>

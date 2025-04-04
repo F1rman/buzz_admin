@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type FileUploadProps = {
    onFileUpload?: (file: File) => void;
+   onRemoveFile?: (index: number) => void;
+   removeAllFiles?: boolean;
 };
 
-export default function FileUpload({ onFileUpload }: FileUploadProps) {
+export default function FileUpload({ onFileUpload, onRemoveFile, removeAllFiles }: FileUploadProps) {
    const [dragActive, setDragActive] = useState(false);
    const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
 
@@ -39,6 +41,11 @@ export default function FileUpload({ onFileUpload }: FileUploadProps) {
       setSelectedFiles((prev) => prev.filter((_, i) => i !== index));
    };
 
+   useEffect(() => {
+      if (removeAllFiles) {
+         setSelectedFiles([]);
+      }
+   },[removeAllFiles]);
    return (
       <div className="flex flex-col w-full">
          <div
@@ -70,7 +77,10 @@ export default function FileUpload({ onFileUpload }: FileUploadProps) {
                      className="w-full h-full object-cover rounded-md flex-none"
                   />
                   <button
-                     onClick={() => handleRemoveFile(index)}
+                     onClick={() => {
+                        handleRemoveFile(index)
+                        onRemoveFile?.(index);
+                     }}
                      className="absolute top-1 right-1 bg-[#4b4848] text-white rounded-full w-5 h-5 flex items-center justify-center text-xs"
                   >
                      ✕

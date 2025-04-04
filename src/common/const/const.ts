@@ -69,22 +69,22 @@ export const breadrumbs_links: Record<string, BreadCrumbNode> = {
                 ],
             },
 
-            "/dashboard/data": {
-                title: "Data",
+            "/dashboard/messages": {
+                title: "Messages",
                 links: [
                     {
-                        title: "Data",
-                        url: "/dashboard/data",
+                        title: "Messages",
+                        url: "/dashboard/messages",
                     },
                 ],
             },
 
-            "/dashboard/statistics": {
-                title: "Statistics",
+            "/dashboard/broadcast": {
+                title: "Broadcast",
                 links: [
                     {
-                        title: "Statistics",
-                        url: "/dashboard/statistics",
+                        title: "Broadcast",
+                        url: "/dashboard/broadcast",
                     },
                 ],
             },

@@ -1,4 +1,4 @@
-import { Story, Fatrows, PresentionChart, HomeTrendUp, Bill } from 'iconsax-react';
+import { Story, Fatrows, PresentionChart, HomeTrendUp, Bill, Messages2, Airplane } from 'iconsax-react';
 
 const icons = {
     widgets: Story,
@@ -6,7 +6,9 @@ const icons = {
     data: Fatrows,
     chart: PresentionChart,
     dashboard: HomeTrendUp,
-    offers: Bill
+    offers: Bill,
+    messages: Messages2,
+    mailing: Airplane
 };
 
 interface MenuItem {
@@ -53,11 +55,19 @@ const menuItems: MenuItems = {
             superAdmin: false
         },
         {
-            id: 'statistics',
-            title: "Statistics",
+            id: 'messages',
+            title: 'Messages',
             type: 'item',
-            url: '/dashboard/statistics',
-            icon: icons.chart,
+            url: '/dashboard/messages',
+            icon: icons.messages,
+            superAdmin: false
+        },
+        {
+            id: 'broadcast',
+            title: "Broadcast",
+            type: 'item',
+            url: '/dashboard/broadcast',
+            icon: icons.mailing,
             superAdmin: false
         },
         {

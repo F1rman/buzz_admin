@@ -37,6 +37,10 @@ const urls = {
 
     prices: {
         byCategoryId: (categoryId: number): string => `categories/${categoryId}/edit_prices`
+    },
+
+    broadcast: {
+        sendMessage: 'buzbot/broadcast'
     }
 }
 

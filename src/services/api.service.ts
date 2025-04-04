@@ -45,7 +45,7 @@ const mainApiService = {
 
     uploadFile: async (file: File, access_type = 'public') => {
         const formData = new FormData();
-        
+
         formData.append("file", file);
         formData.append("access_type", access_type);
 
@@ -62,7 +62,13 @@ const mainApiService = {
             console.error("Помилка при завантаженні файлу:", error);
             throw error;
         }
+    },
+
+    sendMessageToAll: async (message: object) => {
+        await axiosService.post(urls.broadcast.sendMessage, message)
     }
+
+    // buzbot/broadcast
 }
 
 const offersApiService = {

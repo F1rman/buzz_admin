@@ -739,3 +739,20 @@ textarea {
     border-radius: 12px;
   }
 }
+
+.loader {
+  border: 2px solid #ffffffd5;
+  border-top: 3px solid #4680ff;
+  border-radius: 50%;
+  animation: spin 1.3s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
