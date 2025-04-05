@@ -69,15 +69,8 @@ const menuItems: MenuItems = {
             url: '/dashboard/broadcast',
             icon: icons.mailing,
             superAdmin: false
-        },
-        {
-            id: 'data',
-            title: 'Data',
-            type: 'item',
-            url: '/dashboard/data',
-            icon: icons.data,
-            superAdmin: false
-        }]
+        }
+    ]
 }
 
 export default menuItems;
