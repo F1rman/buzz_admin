@@ -46,7 +46,7 @@ export default function Login({ active, state, setState }: IProps) {
             localStorage.setItem("user", JSON.stringify(user));
 
             setLogined(true);
-            navigate("/dashboard/offers");
+            navigate("/dashboard");
         } catch (error) {
             setError((prev) => ({ ...prev, auth: 'email or password is incorrect' }));
             setTimeout(() => {
