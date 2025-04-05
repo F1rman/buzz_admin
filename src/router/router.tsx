@@ -11,7 +11,7 @@ const routes = [{
     children: [
         {
             index: true,
-            element: <Navigate to="/dashboard/offers" replace />
+            element: <Navigate to="/dashboard" replace />
         }
     ]
 },

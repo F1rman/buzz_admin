@@ -12,7 +12,7 @@ interface IProps {
 const MessageHeader: React.FC<IProps> = ({ state, setState }) => {
     return (
         
-        <div className="items-center px-4 py-3 bg-[#fafbfc] w-full gap-3 min-w-[2800px] grid grid-cols-[50px,220px,220px,220px,220px,repeat(4,minmax(80px,1fr)),120px]  border-b-[#dbe0e5a6] border-b">
+        <div className="items-center h-[69px] px-4 py-3 bg-[#fafbfc] w-full gap-3 min-w-[2800px] grid grid-cols-[50px,220px,220px,220px,220px,repeat(4,minmax(80px,1fr)),120px]  border-b-[#dbe0e5a6] border-b">
             <HeaderItem
                 title="Offer"
                 onClick={() => console.log('ID')}

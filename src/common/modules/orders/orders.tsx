@@ -1,4 +1,3 @@
-import { IOfferItem } from 'models/IOfferModel';
 import React, { useEffect, useState } from 'react';
 import Button from 'common/components/button/button';
 import plus from 'common/assets/images/plus.svg';
@@ -17,6 +16,7 @@ interface OrdersState {
 }
 
 const Orders: React.FC = () => {
+  const [loading, setLoading] = useState<boolean>(false);
   const [orders, setOrders] = useState<IOrder[]>([]);
   const [state, setState] = useState<OrdersState>({
     selectAll: false,
@@ -28,11 +28,24 @@ const Orders: React.FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    ordersApiService.getAllOrders(state.page, 20).then((res) => {
-      setOrders(res.items.data);
-      setState((prev) => ({ ...prev, pages: res.items.last_page }));
-    });
+    getOrders();
   }, [state.page]);
+
+  const getOrders = async () => {
+    try {
+      setLoading(true);
+      const response = await ordersApiService.getAllOrders(state.page, 20);
+      setOrders(response.items.data || []);
+      setState((prev) => ({
+        ...prev,
+        pages: response.items?.last_page || 0
+      }));
+    } catch (error) {
+      console.error('Error upload orders', error);
+    } finally {
+      setLoading(false);
+    }
+  }
   return (
     <div className='flex flex-col w-full'>
       <div className='flex w-full justify-start items-center'>
@@ -56,7 +69,7 @@ const Orders: React.FC = () => {
           state={state}
           setState={setState}
         />
-        <div className='flex flex-col min-w-[2800px] overflow-auto h-[560px] gap-3'>
+        {!loading ? <div className='flex flex-col min-w-[2800px] overflow-auto h-[540px] gap-3'>
           {orders.map((order, index) => (<Order
             key={index}
             order={order}
@@ -64,7 +77,10 @@ const Orders: React.FC = () => {
             setState={setState}
             filters={state.filters}
           />))}
+        </div> : <div className='flex w-full justify-center items-center h-[540px]'>
+          <div className={`loader !border-t-[4px] w-[50px] h-[50px]`}></div>
         </div>
+        }
       </div>
       {state.pages !== 0 && <div className='flex w-full max-w-[1500px] justify-center mt-6'>
         <Stack spacing={40}>

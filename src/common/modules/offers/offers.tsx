@@ -16,6 +16,7 @@ interface FiltersState {
 }
 
 const Offers: React.FC = () => {
+    const [loading, setLoading] = useState<boolean>(false);
     const [offers, setOffers] = useState<IOfferItem[]>([]);
     const [state, setState] = useState<FiltersState>({
         selectAll: false,
@@ -27,12 +28,25 @@ const Offers: React.FC = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        offersApiService.getAllOffers(state.page, 20).then((res) => {
-            setOffers(res.items.data);
-            setState((prev) => ({ ...prev, pages: res.items.last_page }));
-        });
+        getOffers();
     }, [state.page]);
 
+    const getOffers = async () => {
+        try {
+            setLoading(true);
+            const response = await offersApiService.getAllOffers(state.page, 20);
+            setOffers(response.items.data || []);
+            setState((prev) => ({
+                ...prev,
+                pages: response.items?.last_page || 0
+            }));
+        } catch (error) {
+            console.error("Error upload offers", error);
+        } finally {
+            console.log('first')
+            setLoading(false);
+        }
+    }
     return (
         <div className='flex flex-col w-full'>
             <div className='flex w-full justify-start items-center'>
@@ -56,7 +70,7 @@ const Offers: React.FC = () => {
                     state={state}
                     setState={setState}
                 />
-                <div className='flex flex-col min-w-[2800px] overflow-auto h-[560px] gap-3'>
+                {!loading ? <div className='flex flex-col min-w-[2800px] overflow-auto h-[540px] gap-3'>
                     {offers.map((offer, index) => (<Offer
                         key={index}
                         offer={offer}
@@ -65,6 +79,10 @@ const Offers: React.FC = () => {
                         filters={state.filters}
                     />))}
                 </div>
+                    : <div className='flex w-full h-[540px] justify-center items-center'>
+                        <div className={`loader !border-t-[4px] w-[50px] h-[50px]`}></div>
+                    </div>
+                }
             </div>
             {state.pages !== 0 && <div className='flex w-full max-w-[1400px] justify-center mt-6'>
                 <Stack spacing={40}>

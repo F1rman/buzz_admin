@@ -16,7 +16,7 @@ const Messages: React.FC = () => {
     });
     return (
         <div>
-            <div className='flex flex-col overflow-x-auto w-full max-w-[1500px] border-[1px] border-[#dbe0e5a6] rounded-t-[12px]'>
+            <div className='flex flex-col overflow-x-auto w-full max-w-[1500px] border-[1px] border-[#dbe0e5a6]  rounded-t-[12px]'>
                 <MessageHeader
                     state={state}
                     setState={setState}

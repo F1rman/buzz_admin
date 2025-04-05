@@ -7,12 +7,14 @@ import { RouterProvider } from 'react-router-dom';
 import { store } from 'redux/store';
 import router from 'router/router';
 import { GoogleMapProvider } from 'contexts/GoogleMapContext';
+import SnackbarElement from 'common/components/snackbar/SnackbarElement';
 
 const App: React.FC = () => {
     return (
         <Provider store={store}>
             <GoogleMapProvider >
                 <AuthProvider>
+                    <SnackbarElement />
                     <RouterProvider router={router} />
                 </AuthProvider>
             </GoogleMapProvider>

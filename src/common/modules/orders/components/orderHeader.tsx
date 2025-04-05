@@ -13,7 +13,7 @@ interface IProps {
 const OrderHeader: React.FC<IProps> = ({ state, setState }) => {
     return (
         
-        <div className="items-center px-4 py-3bg-[#fafbfc] w-full gap-3 min-w-[2800px] grid grid-cols-[50px,50px,150px,220px,repeat(4,minmax(160px,1fr)),120px,repeat(10,minmax(120px,1fr))]  border-b-[#dbe0e5a6] border-b">
+        <div className="items-center px-4 py-3 bg-[#fafbfc] w-full gap-3 min-w-[2800px] grid grid-cols-[50px,50px,150px,220px,repeat(4,minmax(160px,1fr)),120px,repeat(10,minmax(120px,1fr))]  border-b-[#dbe0e5a6] border-b">
             <CheckboxTile
                 active={state.selectAll}
                 classNameWrapper="!pl-0 sm:!px-2"

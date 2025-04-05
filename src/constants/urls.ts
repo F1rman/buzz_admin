@@ -41,6 +41,10 @@ const urls = {
 
     broadcast: {
         sendMessage: 'buzbot/broadcast'
+    },
+
+    events: {
+        list: 'buzbot/events'
     }
 }
 

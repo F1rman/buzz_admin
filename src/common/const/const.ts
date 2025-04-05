@@ -19,6 +19,16 @@ export const breadrumbs_links: Record<string, BreadCrumbNode> = {
         title: "Dashboard",
         url: "/dashboard",
         children: {
+            "/dashboard": {
+                title: "Dashboard",
+                links: [
+                    {
+                        title: "Dashboard",
+                        url: "/dashboard",
+                    },
+                ],
+            },
+
             "/dashboard/offers": {
                 title: "Offers",
                 links: [

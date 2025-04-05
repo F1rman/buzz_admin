@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { mainApiService, ordersApiService } from "services/api.service";
 import Calendar from "react-calendar";
 import File from "common/components/button/file";
+import { openSnackbar } from "common/components/snackbar/snackbar";
 
 interface Data {
     categories: IFilter[];
@@ -158,6 +159,15 @@ export default function CreateOrder() {
             date: new Date(),
             files: []
         }));
+        openSnackbar({
+            open: true,
+            message: 'Ваше замовлення успішно створено!',
+            alert: {
+                color: 'primary',
+                variant: 'filled'
+            },
+            variant: 'alert'
+        })
     }
 
     return (

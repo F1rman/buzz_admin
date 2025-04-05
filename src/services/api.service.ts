@@ -1,9 +1,10 @@
-import axios, { AxiosResponse } from "axios";
+import axios from "axios";
 import { urls } from "../constants/urls";
 import { IAuthModel } from "models/IAuthModel";
-import { IFilter, IOfferDataForm, IOfferItem, IOffersResponse, IPrice } from "models/IOfferModel";
+import { IFilter, IOfferItem, IOffersResponse, IPrice } from "models/IOfferModel";
 import { axiosService } from "./axios.service";
 import { IOrder, IOrderResponse } from "models/IOrder";
+import { IEventFilters } from "models/IFiltersModel";
 
 const authApiService = {
     login: async (email: string, password: string): Promise<IAuthModel> => {
@@ -66,9 +67,26 @@ const mainApiService = {
 
     sendMessageToAll: async (message: object) => {
         await axiosService.post(urls.broadcast.sendMessage, message)
-    }
+    },
 
-    // buzbot/broadcast
+    getAllEvents: async (filters: IEventFilters = {}) => {
+        const map: Record<string, any> = {
+            'filter[is_event]': filters.is_event,
+            'filter[is_error]': filters.is_error,
+            'filter[is_message]': filters.is_message,
+            'filter[is_timeout]': filters.is_timeout,
+            'filter[is_other]': filters.is_other,
+            'page[number]': filters.pageNumber,
+            'page[size]': filters.pageSize,
+        };
+
+        const params = Object.fromEntries(
+            Object.entries(map).filter(([, value]) => value !== undefined)
+        );
+
+        const { data } = await axiosService.get(urls.events.list, { params });
+        return data;
+    }
 }
 
 const offersApiService = {

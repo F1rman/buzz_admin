@@ -1,6 +1,7 @@
 import DashboardLayout from "common/layout/dashboard";
 import ErrorLayout from "layouts/error/ErrorLayout";
 import { BroadcastPage } from "pages/broadcast/BroadcastPage";
+import { DashboardPage } from "pages/dashboard/DashboardPage";
 import { MessagePage } from "pages/messages/MessagePage";
 import { CreateOffersPage } from "pages/offers/create/CreateOfferPage";
 import { OffersPage } from "pages/offers/OffersPage";
@@ -12,6 +13,10 @@ const DashboardRoutes = {
     element: <DashboardLayout />,
     errorElement: <ErrorLayout />,
     children: [
+        {
+            path: '',
+            element: <DashboardPage />
+        },
         {
             path: 'offers',
             element: <OffersPage />
